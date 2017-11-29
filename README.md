@@ -1,6 +1,4 @@
-[![Build Status](https://travis-ci.org/DevelopersOnTheGo/sgescolar_cliente.svg?branch=master)](https://travis-ci.org/DevelopersOnTheGo/sgescolar_cliente)
-# Sistema de Gestion escolar - Configuracion
-
+[![Build Status](https://travis-ci.org/DevelopersOnTheGo/sgescolar_asistencia_client.svg?branch=master)](https://travis-ci.org/DevelopersOnTheGo/sgescolar_asistencia_client)
 > Proyecto con VUEJS 2.x 
 
 ## Build Setup
