@@ -24,8 +24,8 @@ const actions = {
       commit('ERROR_INFORMATION', { information: error.config });
     });
   },
-  LOAD_ESTUDENT_ASISTENCIA: ({ commit, state }, { idD }) => {
-    client.get(`${url1}?docente=${idD}&fecha=${state.fecha}`).then((response) => {
+  LOAD_ESTUDENT_ASISTENCIA: ({ commit, state }, { idD, idC, idF }) => {
+    client.get(`${url1}?docente=${idD}&curso=${idC}&fecha=${idF}`).then((response) => {
       state.code = response.status;
       console.log('>>>>>>>>>>>>>>>>>>>>>>>>><', response);
       state.available = true;
@@ -35,17 +35,29 @@ const actions = {
       commit('ERROR_INFORMATION', { information: error.config });
     });
   },
-  SAVE_ASISTENCIA_ESTUDENT: ({ commit, state }, { idD }) => {
+  EDIT_ESTUDENT_ASISTENCIA: ({ commit, state }) => {
+    for (const key in state.data) {
+      if (Object.prototype.hasOwnProperty.call(state.data, key)) {
+        console.log('que vaor tiene: ', state.data[key]);
+        client.put(`${url1}${state.data[key].id}/`, state.data[key]).then((response) => {
+          commit('SUCCESSFUL_INFORMATION', { info: response.status });
+          console.log(key, response);
+        }, () => {
+        });
+      }
+    }
+  },
+  SAVE_ASISTENCIA_ESTUDENT: ({ commit, state }, { idD, idC }) => {
     console.log('llllllllllllllllllllll', state.data, commit, url1);
     for (const key in state.data) {
       if (Object.prototype.hasOwnProperty.call(state.data, key)) {
-        console.log('>>>', state.data[key].matricula);
+        console.log('>>>', key, state.data[key].matricula);
         for (const i in state.data[key].matricula) {
           if (Object.prototype.hasOwnProperty.call(state.data[key].matricula, i)) {
             state.temp.push({
               estado: 'PRESENTE',
               matricula: state.data[key].matricula[i].id,
-              curso: state.data[key].matricula[i].seccion_grado,
+              curso: idC,
               fecha: state.fecha,
               docente: idD,
             });

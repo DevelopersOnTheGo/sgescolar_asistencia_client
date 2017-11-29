@@ -19,9 +19,8 @@
         </v-layout>
       </v-flex>
       <v-flex xs12>
-        <div v-for="data in asistencia.data">
-          <div row wrap v-for="(matricula,i) in data.matricula" v-bind:key="i">
-            <v-card class="mb-2"	>
+        <div v-for="data,i in asistencia.data" v-bind:key="i">
+            <v-card class="mb-2">
               <v-list >
                 <v-list-tile>
                   <v-flex xs11>
@@ -29,25 +28,24 @@
                     <v-list-tile-avatar >
                       <v-icon :color="`${theme.defaulttheme.color.first}`">person</v-icon>
                     </v-list-tile-avatar>
-                    <span>{{ matricula.seccion_estudiante }}</span>
+                    <span>{{ data.estudiante }}</span>
                   </v-flex>
                   <v-flex xs2>
                     <v-list-tile-action>
-                      <v-radio-group row center class="mb-3" v-model="matricula['estado']">
-                        <input type="radio" label="" color="red darken-3" value="PRESENTE" v-model="matricula['estado']">
-                        <input type="radio" label="" color="indigo" value="TARDE" v-model="matricula['estado']">
-                        <input type="radio" label="" color="indigo darken-3" value="FALTA" v-model="matricula['estado']">
+                      <v-radio-group row center class="mb-3" v-model="data.estado">
+                        <input type="radio" label="" color="red darken-3" value="PRESENTE" v-model="data.estado">
+                        <input type="radio" label="" color="indigo" value="TARDE" v-model="data.estado">
+                        <input type="radio" label="" color="indigo darken-3" value="FALTA" v-model="data.estado">
                       </v-radio-group>
                     </v-list-tile-action>
                   </v-flex>
                 </v-list-tile>
               </v-list>
             </v-card>
-          </div>
         </div>
       </v-flex>
       <div>
-        <v-btn flat v-on:click="sendData">Guardar Asistencia</v-btn>
+        <v-btn flat v-on:click="sendData()">Guardar Asistencia</v-btn>
       </div>
     </v-layout>
   </v-container>
@@ -60,7 +58,8 @@
     mounted() {
       const idD = this.$route.params.id;
       const idC = this.$route.params.idC;
-      this.$store.dispatch('LOAD_ESTUDENT_ASISTENCIA', { idD, idC });
+      const idF = this.$route.params.fecha;
+      this.$store.dispatch('LOAD_ESTUDENT_ASISTENCIA', { idD, idC, idF });
       // this.$store.dispatch('LOAD_ESTUDENT_COURSE');
     },
     data() {
@@ -82,8 +81,8 @@
     },
     methods: {
       sendData() {
-        const idD = this.$route.params.id;
-        this.$store.dispatch('SAVE_ASISTENCIA_ESTUDENT', { idD });
+        this.$store.dispatch('EDIT_ESTUDENT_ASISTENCIA');
+        console.log('se ctualiza');
       },
       send(id) {
         console.log(id);

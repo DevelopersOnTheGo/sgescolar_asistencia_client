@@ -35,7 +35,7 @@
         console.log('=========================================');
         const idC = this.$route.params.idC;
         const idD = this.$route.params.id;
-        this.$store.dispatch('SAVE_ASISTENCIA_ESTUDENT', { idD });
+        this.$store.dispatch('SAVE_ASISTENCIA_ESTUDENT', { idD, idC });
         this.$router.push({ name: 'Rasistencia', params: { id: idD, idC, fecha } });
       },
     },
