@@ -39,7 +39,7 @@
     data: () => ({
       dialog: false,
       title: 'SERVICIO TEMPORALMETE NO DISPONIBLE',
-      content: 'Vuenva en unos minutos',
+      content: 'Vuelva en unos minutos',
       report: 'De no ser asi : Reporte el problema',
       report_firebse: '¿ Desea reportar el Problema ?',
       content_report: 'El problema sera reportado, atenderemos de inmediato el problema ',

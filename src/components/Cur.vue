@@ -1,7 +1,6 @@
 <template>
   <v-container  text-xs-center>
-    <v-layout row wrap>
-      <div  v-if="notification.code.info==200">
+    <v-layout row wrap v-if="notification.code.info==200">
         <v-card color="pink darken" class="white--text">
           <v-container fluid grid-list-lg>
             <h4>{{title}}</h4>
@@ -10,23 +9,23 @@
         <v-card light color="white">
           <v-container fluid grid-list-lg>
             <v-form v-model="valid" ref="form" lazy-validation>
-              <v-text-field label="Nombre" v-model="curso.temp.nombre" :counter="100" required></v-text-field>
-              <v-text-field label="Codigo" v-model="curso.temp.codigo" :counter="20" required></v-text-field>
+              <v-text-field label="Nombre" v-model="cur.temp.nombre" :counter="100" required></v-text-field>
+              <v-text-field label="Codigo" v-model="cur.temp.codigo" :counter="20" required></v-text-field>
               <v-card-actions>
-                <v-btn @click="save(curso.temp.id)" :disabled="!valid">submit</v-btn>
+                <v-btn @click="save(cur.temp.id)" :disabled="!valid">submit</v-btn>
                 <v-btn @click="clear">clear</v-btn>
               </v-card-actions>
             </v-form>
           </v-container>
         </v-card>
-      </div>
+
       <v-flex xl12 lg12 md12 sm12 xs12>
         <v-layout >
           <v-card>
             <table>
               <thead>
               <tr>
-                <th v-for="i in curso.objectKeysHead" @click="Order()">{{i}}</th>
+                <th v-for="i in cur.objectKeysHead" @click="Order()">{{i}}</th>
               </tr>
               </thead>
               <tfoot>
@@ -39,9 +38,9 @@
               </tfoot>
               <tbody>
 
-              <tr v-for="(data, i) in curso.data"  @click="select(data, i)">
+              <tr v-for="(data, i) in cur.data"  @click="select(data, i)">
                 <td>{{i+1}}</td>
-                  <td v-for="td in curso.objectKeysBody">{{data[td]}}</td>
+                  <td v-for="td in cur.objectKeysBody">{{data[td]}}</td>
                   <td>
                     <v-list-tile-action>
                       <v-btn  @click="remove(data.id, i)">
@@ -71,10 +70,11 @@
       </v-list-tile-action>
       <v-flex xl6 lg6 md6 sm6 xs6>
 
-        <v-layout>
-          <es-notification></es-notification>
-        </v-layout>
+
       </v-flex>
+    </v-layout>
+    <v-layout v-else>
+      <es-notification></es-notification>
     </v-layout>
   </v-container>
 </template>
@@ -90,6 +90,7 @@
     },
     name: 'Curso',
     mounted() {
+      this.notification.code.info = false;
       this.$store.dispatch('LOAD_PROJECT_LIST');
     },
     created() {
@@ -107,7 +108,7 @@
       ],
     }),
     computed: {
-      ...mapState(['curso']),
+      ...mapState(['cur']),
       ...mapState(['notification']),
       ...mapGetters(['selectObjectKey']),
       cabecera() {
