@@ -5,6 +5,7 @@ import Cur from '@/components/Cur';
 import TestExample from '@/components/TestExample';
 import Docente from '@/components/Docente';
 import Asistencia from '@/components/Asistencia';
+import RegistrarAsistencia from '@/components/RegistrarAsistencia';
 
 Vue.use(Router);
 
@@ -38,8 +39,16 @@ const listMenu = [
     name: 'asistencia',
     icon: 'bubble_chart',
     text: 'Asistencia',
-    state: true,
+    state: false,
     component: Asistencia,
+  },
+  {
+    path: '/docente/:id/curso/:idC/asistencia/:fecha',
+    name: 'Rasistencia',
+    icon: 'bubble_chart',
+    text: 'Asistencia',
+    state: false,
+    component: RegistrarAsistencia,
   },
   {
     path: '/cur',
